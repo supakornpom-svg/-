@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>โรงยิมเซปักตะกร้อ สุขสันต์ - Suksan Sepak Takraw Gym</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Kanit) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#064e3b',   // Emerald 900
+                            primary: '#047857',// Emerald 700
+                            accent: '#10b981', // Emerald 500
+                            light: '#d1fae5',  // Emerald 100
+                            gold: '#f59e0b',   // Amber 500
+                            goldHover: '#d97706',
+                            goldLight: '#fef3c7'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Kanit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .tab-btn.active {
+            background-color: #047857;
+            color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #10b981;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #047857;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col text-slate-800">
+
+    <!-- Header Navigation -->
+    <header class="bg-gradient-to-r from-brand-dark via-brand-primary to-brand-dark text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo & Title -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 rounded-full bg-brand-gold flex items-center justify-center text-brand-dark text-2xl font-bold shadow-md border-2 border-white">
+                        <i class="fa-solid font-bold">⚽</i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl sm:text-2xl font-bold tracking-wide text-white leading-tight">
+                            โรงยิมเซปักตะกร้อ <span class="text-brand-gold">สุขสันต์</span>
+                        </h1>
+                        <p class="text-xs sm:text-sm text-emerald-200">Suksan Sepak Takraw Gym Club</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs (Desktop) -->
+                <nav class="hidden md:flex space-x-1 lg:space-x-2 bg-emerald-900/60 p-1.5 rounded-xl border border-emerald-600/30">
+                    <button onclick="switchTab('profile')" id="nav-profile" class="tab-btn active px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2">
+                        <i class="fa-solid fa-user"></i> ข้อมูลส่วนตัว & รูป
+                    </button>
+                    <button onclick="switchTab('bmi')" id="nav-bmi" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2">
+                        <i class="fa-solid fa-calculator"></i> คำนวณ BMI
+                    </button>
+                    <button onclick="switchTab('finance')" id="nav-finance" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2">
+                        <i class="fa-solid fa-wallet"></i> รายรับ-รายจ่าย
+                    </button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Bottom Bar -->
+        <div class="md:hidden flex justify-around bg-brand-dark border-t border-emerald-800 p-2 text-xs">
+            <button onclick="switchTab('profile')" id="mob-nav-profile" class="flex flex-col items-center p-2 text-brand-gold font-medium">
+                <i class="fa-solid fa-user text-lg mb-1"></i> ข้อมูลส่วนตัว
+            </button>
+            <button onclick="switchTab('bmi')" id="mob-nav-bmi" class="flex flex-col items-center p-2 text-emerald-200 font-medium">
+                <i class="fa-solid fa-calculator text-lg mb-1"></i> คำนวณ BMI
+            </button>
+            <button onclick="switchTab('finance')" id="mob-nav-finance" class="flex flex-col items-center p-2 text-emerald-200 font-medium">
+                <i class="fa-solid fa-wallet text-lg mb-1"></i> รายรับ-รายจ่าย
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- Banner Announcement -->
+        <div class="bg-gradient-to-r from-brand-goldLight to-amber-100 border-l-4 border-brand-gold p-4 rounded-xl shadow-sm mb-8 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="p-2 bg-brand-gold text-white rounded-lg">
+                    <i class="fa-solid fa-bullhorn text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-slate-800">ยินดีต้อนรับสู่ โรงยิมเซปักตะกร้อ สุขสันต์!</h3>
+                    <p class="text-xs sm:text-sm text-slate-600">ยิมเปิดบริการทุกวัน 08:00 - 21:00 น. มีสนามมาตรฐาน ตะกร้อฝึกซ้อม และผู้เชี่ยวชาญดูแล</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 1: PROFILE & PHOTO UPLOAD -->
+        <section id="section-profile" class="space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Card 1: Profile Photo Upload -->
+                <div class="bg-white rounded-2xl shadow-md p-6 border border-slate-100 flex flex-col items-center text-center">
+                    <h2 class="text-xl font-bold text-brand-dark mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-image text-brand-gold"></i> รูปโปรไฟล์นักกีฬา
+                    </h2>
+                    
+                    <!-- Avatar Preview Box -->
+                    <div class="relative group my-4">
+                        <div class="w-44 h-44 rounded-full overflow-hidden border-4 border-brand-primary shadow-lg bg-slate-100 flex items-center justify-center">
+                            <img id="avatar-preview" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80" alt="Profile Preview" class="w-full h-full object-cover">
+                        </div>
+                        <label for="image-upload" class="absolute bottom-2 right-2 bg-brand-gold hover:bg-brand-goldHover text-white p-3 rounded-full shadow-lg cursor-pointer transition transform hover:scale-110">
+                            <i class="fa-solid fa-camera text-lg"></i>
+                        </label>
+                        <input id="image-upload" type="file" accept="image/*" class="hidden" onchange="previewImage(event)">
+                    </div>
+
+                    <p class="text-xs text-slate-500 mb-4">รองรับไฟล์ JPG, PNG หรือ GIF (ขนาดแนะนำ 1:1)</p>
+                    
+                    <div class="w-full bg-brand-light p-3 rounded-xl border border-emerald-200 text-brand-dark text-xs font-medium flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-circle-check text-brand-accent"></i> พร้อมใช้งานสำหรับบัตรสมาชิก
+                    </div>
+                </div>
+
+                <!-- Card 2: Profile Form -->
+                <div class="lg:col-span-2 bg-white rounded-2xl shadow-md p-6 border border-slate-100">
+                    <h2 class="text-xl font-bold text-brand-dark mb-6 flex items-center gap-2 border-b pb-3">
+                        <i class="fa-solid fa-id-card text-brand-gold"></i> ข้อมูลส่วนตัวสมาชิก
+                    </h2>
+
+                    <form id="profile-form" onsubmit="saveProfile(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">ชื่อ-นามสกุล <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <i class="fa-solid fa-user absolute left-3 top-3 text-slate-400"></i>
+                                <input type="text" id="prof-name" required value="สมชาย ใจดี" class="w-full pl-10 pr-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">เบอร์โทรศัพท์ <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <i class="fa-solid fa-phone absolute left-3 top-3 text-slate-400"></i>
+                                <input type="tel" id="prof-phone" required value="081-234-5678" class="w-full pl-10 pr-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">อายุ (ปี)</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-cake-candles absolute left-3 top-3 text-slate-400"></i>
+                                <input type="number" id="prof-age" value="25" min="5" max="99" class="w-full pl-10 pr-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">ตำแหน่งการเล่นเซปักตะกร้อ</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-volleyball absolute left-3 top-3 text-slate-400"></i>
+                                <select id="prof-position" class="w-full pl-10 pr-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none bg-white">
+                                    <option value="ตัวฟาด (Spiker / Striker)">ตัวฟาด (Spiker / Striker)</option>
+                                    <option value="ตัวชง / ตัวตั้ง (Setter / Feeder)">ตัวชง / ตัวตั้ง (Setter / Feeder)</option>
+                                    <option value="ตัวเสิร์ฟ / หน้าขวา (Tekong / Server)">ตัวเสิร์ฟ / หลัง (Tekong / Server)</option>
+                                    <option value="เล่นได้ทุกตำแหน่ง (All-Rounder)">เล่นได้ทุกตำแหน่ง (All-Rounder)</option>
+                                    <option value="ผู้เริ่มต้น / ออกกำลังกาย">ผู้เริ่มต้น / ออกกำลังกาย</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">ระดับประสบการณ์</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-trophy absolute left-3 top-3 text-slate-400"></i>
+                                <select id="prof-level" class="w-full pl-10 pr-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none bg-white">
+                                    <option value="มือใหม่ (Beginner)">มือใหม่ (Beginner)</option>
+                                    <option value="ปานกลาง (Intermediate)">ปานกลาง (Intermediate)</option>
+                                    <option value="นักกีฬายิม / แข่งขัน (Advanced)">นักกีฬายิม / แข่งขัน (Advanced)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">สังกัดทีม / ชมรม</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-users absolute left-3 top-3 text-slate-400"></i>
+                                <input type="text" id="prof-team" value="ทีมสุขสันต์คลับ" class="w-full pl-10 pr-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none">
+                            </div>
+                        </div>
+
+                        <div class="md:col-span-2 mt-4 flex items-center justify-between">
+                            <div id="save-status" class="text-sm font-medium text-emerald-600 opacity-0 transition-opacity duration-300">
+                                <i class="fa-solid fa-circle-check"></i> บันทึกข้อมูลสำเร็จ!
+                            </div>
+                            <button type="submit" class="bg-brand-primary hover:bg-brand-dark text-white font-semibold px-6 py-2.5 rounded-xl shadow-md transition duration-200 flex items-center gap-2">
+                                <i class="fa-solid fa-floppy-disk"></i> บันทึกข้อมูลส่วนตัว
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Preview Badge Display -->
+                    <div class="mt-6 pt-6 border-t border-slate-100 bg-slate-50 p-4 rounded-xl">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">บัตรประจำตัวสมาชิก (สรุปข้อมูล)</h4>
+                        <div class="flex flex-wrap items-center justify-between gap-4">
+                            <div>
+                                <p class="text-lg font-bold text-slate-800" id="disp-name">คุณสมชาย ใจดี</p>
+                                <p class="text-xs text-slate-500" id="disp-sub">ตำแหน่ง: <span class="font-semibold text-brand-primary" id="disp-pos">ตัวฟาด (Spiker / Striker)</span> | สังกัด: <span id="disp-team">ทีมสุขสันต์คลับ</span></p>
+                            </div>
+                            <span id="disp-level-badge" class="bg-brand-goldLight text-brand-goldHover text-xs font-bold px-3 py-1.5 rounded-full border border-amber-200">
+                                มือใหม่ (Beginner)
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: BMI CALCULATOR -->
+        <section id="section-bmi" class="hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                
+                <!-- BMI Calculator Input -->
+                <div class="lg:col-span-5 bg-white rounded-2xl shadow-md p-6 border border-slate-100">
+                    <h2 class="text-xl font-bold text-brand-dark mb-4 flex items-center gap-2 border-b pb-3">
+                        <i class="fa-solid fa-calculator text-brand-gold"></i> คำนวณ BMI สำหรับนักตะกร้อ
+                    </h2>
+                    <p class="text-xs text-slate-500 mb-6">ประเมินดัชนีมวลกายเพื่อเพิ่มประสิทธิภาพความคล่องตัวในการกระโดดและการเล่นตะกร้อ</p>
+
+                    <form onsubmit="calculateBMI(event)" class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">น้ำหนัก (กิโลกรัม / kg)</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-weight-scale absolute left-3 top-3 text-slate-400"></i>
+                                <input type="number" step="0.1" id="bmi-weight" placeholder="เช่น 65.5" required class="w-full pl-10 pr-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none text-lg font-semibold">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">ส่วนสูง (เซนติเมตร / cm)</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-ruler-vertical absolute left-3 top-3 text-slate-400"></i>
+                                <input type="number" step="0.1" id="bmi-height" placeholder="เช่น 172" required class="w-full pl-10 pr-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none text-lg font-semibold">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-brand-gold hover:bg-brand-goldHover text-white font-bold py-3 rounded-xl shadow-md transition duration-200 flex items-center justify-center gap-2 text-base">
+                            <i class="fa-solid fa-bolt"></i> คำนวณผล BMI
+                        </button>
+                    </form>
+                </div>
+
+                <!-- BMI Result Display -->
+                <div class="lg:col-span-7 bg-white rounded-2xl shadow-md p-6 border border-slate-100 flex flex-col justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold text-brand-dark mb-4 border-b pb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-chart-pie text-brand-gold"></i> ผลการวิเคราะห์และคำแนะนำ
+                        </h2>
+
+                        <div id="bmi-placeholder" class="text-center py-12 text-slate-400">
+                            <i class="fa-solid fa-heart-pulse text-5xl mb-3 animate-pulse text-slate-300"></i>
+                            <p>กรุณากรอกน้ำหนักและส่วนสูงเพื่อคำนวณผล</p>
+                        </div>
+
+                        <div id="bmi-result-card" class="hidden">
+                            <div class="flex flex-col sm:flex-row items-center justify-between p-6 rounded-2xl bg-slate-50 border mb-6 text-center sm:text-left">
+                                <div>
+                                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">ค่า BMI ของคุณ</span>
+                                    <div class="text-5xl font-black text-brand-dark my-1" id="res-bmi-val">--.-</div>
+                                    <div class="text-base font-semibold" id="res-bmi-category">--</div>
+                                </div>
+                                <div class="mt-4 sm:mt-0 w-24 h-24 rounded-full flex items-center justify-center text-3xl font-bold shadow-inner" id="res-bmi-badge">
+                                    <i class="fa-solid fa-child"></i>
+                                </div>
+                            </div>
+
+                            <!-- Takraw Performance Advice -->
+                            <div class="space-y-4">
+                                <div class="bg-brand-light/50 p-4 rounded-xl border border-emerald-200">
+                                    <h4 class="font-bold text-brand-dark flex items-center gap-2 text-sm mb-1">
+                                        <i class="fa-solid fa-shoe-prints text-brand-primary"></i> คำแนะนำด้านความคล่องตัว (Takraw Agility):
+                                    </h4>
+                                    <p class="text-sm text-slate-700" id="res-advice-fitness">--</p>
+                                </div>
+
+                                <div class="bg-amber-50 p-4 rounded-xl border border-amber-200">
+                                    <h4 class="font-bold text-amber-900 flex items-center gap-2 text-sm mb-1">
+                                        <i class="fa-solid fa-apple-whole text-brand-gold"></i> คำแนะนำโภชนาการนักกีฬา:
+                                    </h4>
+                                    <p class="text-sm text-slate-700" id="res-advice-nutrition">--</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BMI Reference Scale -->
+                    <div class="mt-6 pt-4 border-t border-slate-100">
+                        <p class="text-xs font-bold text-slate-400 mb-2">เกณฑ์มาตรฐาน BMI (เอเชีย)</p>
+                        <div class="grid grid-cols-4 gap-1 text-center text-[10px] sm:text-xs font-medium">
+                            <div class="bg-blue-100 text-blue-700 p-1.5 rounded">&lt; 18.5<br>ผอม</div>
+                            <div class="bg-emerald-100 text-emerald-800 p-1.5 rounded">18.5 - 22.9<br>สมส่วน</div>
+                            <div class="bg-amber-100 text-amber-800 p-1.5 rounded">23.0 - 24.9<br>ท้วม</div>
+                            <div class="bg-red-100 text-red-800 p-1.5 rounded">&ge; 25.0<br>อ้วน</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TAB 3: FINANCE TRACKER -->
+        <section id="section-finance" class="hidden space-y-6">
+            
+            <!-- Summary Dashboard Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Income Card -->
+                <div class="bg-white rounded-2xl shadow-md p-6 border-l-4 border-emerald-500 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase text-slate-400">รายรับรวม</p>
+                        <h3 class="text-2xl font-bold text-emerald-600 mt-1" id="total-income">฿0.00</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-arrow-down-left"></i>
+                    </div>
+                </div>
+
+                <!-- Expense Card -->
+                <div class="bg-white rounded-2xl shadow-md p-6 border-l-4 border-red-500 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase text-slate-400">รายจ่ายรวม</p>
+                        <h3 class="text-2xl font-bold text-red-600 mt-1" id="total-expense">฿0.00</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-arrow-up-right"></i>
+                    </div>
+                </div>
+
+                <!-- Profit/Balance Card -->
+                <div class="bg-white rounded-2xl shadow-md p-6 border-l-4 border-brand-gold flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase text-slate-400">คงเหลือ / กำไรสุทธิ</p>
+                        <h3 class="text-2xl font-bold text-brand-dark mt-1" id="total-balance">฿0.00</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-amber-100 text-brand-goldHover rounded-full flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Transaction Form -->
+                <div class="lg:col-span-5 bg-white rounded-2xl shadow-md p-6 border border-slate-100">
+                    <h2 class="text-xl font-bold text-brand-dark mb-4 border-b pb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-pen-to-square text-brand-gold"></i> บันทึกรายการใหม่
+                    </h2>
+
+                    <form onsubmit="addTransaction(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">ประเภทรายการ</label>
+                            <div class="grid grid-cols-2 gap-3">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="tx-type" value="income" checked class="peer hidden">
+                                    <div class="p-3 text-center rounded-xl border border-slate-200 peer-checked:border-emerald-500 peer-checked:bg-emerald-50 peer-checked:text-emerald-700 font-semibold transition">
+                                        <i class="fa-solid fa-circle-plus mr-1"></i> รายรับ
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="tx-type" value="expense" class="peer hidden">
+                                    <div class="p-3 text-center rounded-xl border border-slate-200 peer-checked:border-red-500 peer-checked:bg-red-50 peer-checked:text-red-700 font-semibold transition">
+                                        <i class="fa-solid fa-circle-minus mr-1"></i> รายจ่าย
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">รายละเอียด / รายการ</label>
+                            <input type="text" id="tx-title" placeholder="เช่น ค่าเช่าสนามคอร์ท A, ค่าลูกตะกร้อ Marathon" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">หมวดหมู่</label>
+                            <select id="tx-category" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none bg-white">
+                                <option value="ค่าเช่าสนาม">ค่าเช่าสนาม</option>
+                                <option value="ค่าสมาชิก / รายเดือน">ค่าสมาชิก / รายเดือน</option>
+                                <option value="ค่าสอน / เทรนเนอร์">ค่าสอน / เทรนเนอร์</option>
+                                <option value="อุปกรณ์ตะกร้อ/ตาข่าย">อุปกรณ์ตะกร้อ / ตาข่าย</option>
+                                <option value="ค่าน้ำ/ค่าไฟ/ซ่อมบำรุง">ค่าน้ำ / ค่าไฟ / ซ่อมบำรุง</option>
+                                <option value="อื่นๆ">อื่นๆ</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">จำนวนเงิน (บาท)</label>
+                            <input type="number" step="0.01" id="tx-amount" placeholder="0.00" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none font-semibold">
+                        </div>
+
+                        <button type="submit" class="w-full bg-brand-primary hover:bg-brand-dark text-white font-bold py-3 rounded-xl shadow-md transition duration-200 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-plus"></i> บันทึกรายการ
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Transaction Table History -->
+                <div class="lg:col-span-7 bg-white rounded-2xl shadow-md p-6 border border-slate-100 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4 border-b pb-3">
+                            <h2 class="text-xl font-bold text-brand-dark flex items-center gap-2">
+                                <i class="fa-solid fa-list-check text-brand-gold"></i> ประวัติรายการรายรับ-รายจ่าย
+                            </h2>
+                            <span class="text-xs text-slate-500" id="tx-count">0 รายการ</span>
+                        </div>
+
+                        <!-- Table -->
+                        <div class="overflow-x-auto max-h-[360px] overflow-y-auto">
+                            <table class="w-full text-left text-sm text-slate-600">
+                                <thead class="text-xs uppercase bg-slate-100 text-slate-500 sticky top-0">
+                                    <tr>
+                                        <th class="py-3 px-3">รายการ</th>
+                                        <th class="py-3 px-3">หมวดหมู่</th>
+                                        <th class="py-3 px-3 text-right">จำนวนเงิน</th>
+                                        <th class="py-3 px-3 text-center">จัดการ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tx-table-body" class="divide-y border-b">
+                                    <!-- Rows populated by JS -->
+                                </tbody>
+                            </table>
+                            <div id="no-tx-msg" class="text-center py-10 text-slate-400">
+                                <i class="fa-solid fa-receipt text-4xl mb-2"></i>
+                                <p>ยังไม่มีข้อมูลบันทึกรายการ</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t text-right">
+                        <button onclick="clearAllTransactions()" class="text-xs text-red-500 hover:text-red-700 font-medium">
+                            <i class="fa-solid fa-trash-can"></i> ล้างประวัติทั้งหมด
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark text-white mt-12 border-t border-emerald-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-xs text-emerald-200">
+            <p class="font-medium">© 2026 โรงยิมเซปักตะกร้อ สุขสันต์ (Suksan Sepak Takraw Gym) - เพื่อสุขภาพและความเป็นเลิศทางกีฬา</p>
+            <p class="mt-1 text-emerald-400">สนามมาตรฐาน ISO • อุปกรณ์ครบครัน • บรรยากาศเป็นกันเอง</p>
+        </div>
+    </footer>
+
+    <!-- Custom JavaScript Code -->
+    <script>
+        // State Management
+        let transactions = [
+            { id: 1, title: 'ค่าเช่าสนาม คอร์ท 1 (2 ชม.)', category: 'ค่าเช่าสนาม', type: 'income', amount: 400 },
+            { id: 2, title: 'ซื้อลูกตะกร้อ Marathon 3 ลูก', category: 'อุปกรณ์ตะกร้อ/ตาข่าย', type: 'expense', amount: 650 },
+            { id: 3, title: 'ค่าสมาชิกรายเดือน คุณสมชาย', category: 'ค่าสมาชิก / รายเดือน', type: 'income', amount: 1200 }
+        ];
+
+        // Tab Switching Logic
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.getElementById('section-profile').classList.add('hidden');
+            document.getElementById('section-bmi').classList.add('hidden');
+            document.getElementById('section-finance').classList.add('hidden');
+
+            // Reset desktop tab styles
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            // Reset mobile nav styles
+            document.querySelectorAll('[id^="mob-nav-"]').forEach(btn => {
+                btn.classList.remove('text-brand-gold');
+                btn.classList.add('text-emerald-200');
+            });
+
+            // Show selected tab & highlight nav
+            document.getElementById(`section-${tabName}`).classList.remove('hidden');
+            document.getElementById(`nav-${tabName}`).classList.add('active');
+            
+            const mobBtn = document.getElementById(`mob-nav-${tabName}`);
+            if (mobBtn) {
+                mobBtn.classList.remove('text-emerald-200');
+                mobBtn.classList.add('text-brand-gold');
+            }
+        }
+
+        // 1. Profile Picture Preview
+        function previewImage(event) {
+            const input = event.target;
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('avatar-preview').src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // 2. Profile Form Handler
+        function saveProfile(event) {
+            event.preventDefault();
+            const name = document.getElementById('prof-name').value;
+            const pos = document.getElementById('prof-position').value;
+            const team = document.getElementById('prof-team').value;
+            const level = document.getElementById('prof-level').value;
+
+            // Update UI preview badge
+            document.getElementById('disp-name').textContent = `คุณ${name}`;
+            document.getElementById('disp-pos').textContent = pos;
+            document.getElementById('disp-team').textContent = team;
+            document.getElementById('disp-level-badge').textContent = level;
+
+            // Show success alert toast
+            const statusToast = document.getElementById('save-status');
+            statusToast.classList.remove('opacity-0');
+            setTimeout(() => {
+                statusToast.classList.add('opacity-0');
+            }, 3000);
+        }
+
+        // 3. BMI Calculation Logic for Sepak Takraw
+        function calculateBMI(event) {
+            event.preventDefault();
+            const weight = parseFloat(document.getElementById('bmi-weight').value);
+            const heightCm = parseFloat(document.getElementById('bmi-height').value);
+
+            if (!weight || !heightCm) return;
+
+            const heightM = heightCm / 100;
+            const bmi = (weight / (heightM * heightM)).toFixed(1);
+
+            const placeholder = document.getElementById('bmi-placeholder');
+            const resultCard = document.getElementById('bmi-result-card');
+            
+            placeholder.classList.add('hidden');
+            resultCard.classList.remove('hidden');
+
+            document.getElementById('res-bmi-val').textContent = bmi;
+
+            const categoryElem = document.getElementById('res-bmi-category');
+            const badgeElem = document.getElementById('res-bmi-badge');
+            const agilityElem = document.getElementById('res-advice-fitness');
+            const nutritionElem = document.getElementById('res-advice-nutrition');
+
+            // Evaluation logic tuned for Asian sports standards
+            if (bmi < 18.5) {
+                categoryElem.textContent = 'น้ำหนักน้อยกว่าเกณฑ์ (ผอม)';
+                categoryElem.className = 'text-base font-semibold text-blue-600';
+                badgeElem.className = 'w-20 h-20 rounded-full flex items-center justify-center text-3xl shadow-inner bg-blue-100 text-blue-600';
+                badgeElem.innerHTML = '<i class="fa-solid fa-feather"></i>';
+                
+                agilityElem.textContent = 'น้ำหนักเบาทำให้สปริงตัวได้ดี แต่มวลกล้ามเนื้อน้อยอาจขาดแรงส่งในการฟาดตะกร้อ (Kill Spike) แนะนำเสริมสร้างกล้ามเนื้อขาและแกนกลางลำตัว';
+                nutritionElem.textContent = 'เน้นเพิ่มสารอาหารโปรตีนและคาร์โบไฮเดรตเชิงซ้อน เพื่อสร้างมวลกล้ามเนื้อและเพิ่มความอึดในการเล่นเกมยาว';
+            } else if (bmi >= 18.5 && bmi <= 22.9) {
+                categoryElem.textContent = 'น้ำหนักปกติ สมส่วน (ระดับนักกีฬา)';
+                categoryElem.className = 'text-base font-semibold text-emerald-600';
+                badgeElem.className = 'w-20 h-20 rounded-full flex items-center justify-center text-3xl shadow-inner bg-emerald-100 text-emerald-600';
+                badgeElem.innerHTML = '<i class="fa-solid fa-medal"></i>';
+                
+                agilityElem.textContent = 'รูปร่างและดัชนีมวลกายสมบูรณ์แบบสำหรับนักตะกร้อ! เหมาะกับทั้งตำแหน่งตัวฟาด (ต้องการการเทคตัวสูง) และตัวชง/ตัวเสิร์ฟ (ต้องการความคล่องตัว)';
+                nutritionElem.textContent = 'รักษาความสมดุลของการรับประทานอาหาร ดื่มน้ำให้เพียงพอทั้งก่อนและหลังซ้อมเพื่อป้องกันตะคริว';
+            } else if (bmi >= 23.0 && bmi <= 24.9) {
+                categoryElem.textContent = 'น้ำหนักเกินเกณฑ์เล็กน้อย (ท้วม)';
+                categoryElem.className = 'text-base font-semibold text-amber-600';
+                badgeElem.className = 'w-20 h-20 rounded-full flex items-center justify-center text-3xl shadow-inner bg-amber-100 text-amber-600';
+                badgeElem.innerHTML = '<i class="fa-solid fa-person-running"></i>';
+                
+                agilityElem.textContent = 'อาจทำให้ข้อเท้าและเข่ารับแรงกระแทกมากขึ้นขณะลงสู่พื้นจากการขึ้นฟาด แนะนำเพิ่มการคาร์ดิโอ (วิ่ง/กระโดดเชือก) เพื่อเพิ่มความพริ้วไหว';
+                nutritionElem.textContent = 'ลดการบริโภคน้ำหวาน ของทอด และเพิ่มสัดส่วนผักผลไม้ เพื่อกระชับสัดส่วน';
+            } else {
+                categoryElem.textContent = 'เริ่มมีภาวะอ้วน / น้ำหนักเกิน';
+                categoryElem.className = 'text-base font-semibold text-red-600';
+                badgeElem.className = 'w-20 h-20 rounded-full flex items-center justify-center text-3xl shadow-inner bg-red-100 text-red-600';
+                badgeElem.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+                
+                agilityElem.textContent = 'ควรระวังเรื่องแรงกระแทกบริเวณข้อเข่า ควรเริ่มต้นด้วยการแปะตะกร้ออบอุ่นร่างกาย เบาๆ และฝึกความยืดหยุ่นของกล้ามเนื้อ';
+                nutritionElem.textContent = 'ควบคุมปริมาณแคลอรี งดน้ำตบทานหวาน เน้นการรับประทานโปรตีนไขมันต่ำเพื่อสร้างกล้ามเนื้อทดแทนไขมัน';
+            }
+        }
+
+        // 4. Finance Tracker Logic
+        function renderFinance() {
+            const tableBody = document.getElementById('tx-table-body');
+            const noMsg = document.getElementById('no-tx-msg');
+            tableBody.innerHTML = '';
+
+            let totalInc = 0;
+            let totalExp = 0;
+
+            if (transactions.length === 0) {
+                noMsg.classList.remove('hidden');
+            } else {
+                noMsg.classList.add('hidden');
+            }
+
+            transactions.forEach(item => {
+                if (item.type === 'income') {
+                    totalInc += item.amount;
+                } else {
+                    totalExp += item.amount;
+                }
+
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50 transition';
+                tr.innerHTML = `
+                    <td class="py-3 px-3 font-medium text-slate-800">${escapeHtml(item.title)}</td>
+                    <td class="py-3 px-3"><span class="bg-slate-100 text-slate-600 text-xs px-2.5 py-1 rounded-full">${escapeHtml(item.category)}</span></td>
+                    <td class="py-3 px-3 text-right font-bold ${item.type === 'income' ? 'text-emerald-600' : 'text-red-500'}">
+                        ${item.type === 'income' ? '+' : '-'}฿${item.amount.toLocaleString('th-TH', {minimumFractionDigits: 2})}
+                    </td>
+                    <td class="py-3 px-3 text-center">
+                        <button onclick="deleteTransaction(${item.id})" class="text-slate-400 hover:text-red-500 transition px-2 py-1">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+
+            const netBalance = totalInc - totalExp;
+
+            document.getElementById('total-income').textContent = `฿${totalInc.toLocaleString('th-TH', {minimumFractionDigits: 2})}`;
+            document.getElementById('total-expense').textContent = `฿${totalExp.toLocaleString('th-TH', {minimumFractionDigits: 2})}`;
+            
+            const balanceElem = document.getElementById('total-balance');
+            balanceElem.textContent = `฿${netBalance.toLocaleString('th-TH', {minimumFractionDigits: 2})}`;
+            if (netBalance < 0) {
+                balanceElem.className = 'text-2xl font-bold text-red-600 mt-1';
+            } else {
+                balanceElem.className = 'text-2xl font-bold text-brand-dark mt-1';
+            }
+
+            document.getElementById('tx-count').textContent = `${transactions.length} รายการ`;
+        }
+
+        function addTransaction(event) {
+            event.preventDefault();
+            const type = document.querySelector('input[name="tx-type"]:checked').value;
+            const title = document.getElementById('tx-title').value.trim();
+            const category = document.getElementById('tx-category').value;
+            const amount = parseFloat(document.getElementById('tx-amount').value);
+
+            if (!title || isNaN(amount) || amount <= 0) return;
+
+            const newTx = {
+                id: Date.now(),
+                title: title,
+                category: category,
+                type: type,
+                amount: amount
+            };
+
+            transactions.unshift(newTx);
+            renderFinance();
+
+            // Reset Form
+            document.getElementById('tx-title').value = '';
+            document.getElementById('tx-amount').value = '';
+        }
+
+        function deleteTransaction(id) {
+            transactions = transactions.filter(t => t.id !== id);
+            renderFinance();
+        }
+
+        function clearAllTransactions() {
+            if (transactions.length === 0) return;
+            transactions = [];
+            renderFinance();
+        }
+
+        // Helper XSS Security Function
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Initialize Application
+        window.onload = function() {
+            renderFinance();
+        };
+    </script>
+</body>
+</html>

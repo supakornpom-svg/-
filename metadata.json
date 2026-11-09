@@ -1,0 +1,8 @@
+{
+  "name": "Remix Suksan Sepak Takraw Gym",
+  "description": "ระบบจัดการโรงยิมเซปักตะกร้อ สุขสันต์ - บัตรสมาชิกนักกีฬา คำนวณ BMI และระบบบัญชีรายรับ-รายจ่าย",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
